@@ -7,33 +7,44 @@ This repository holds the files I need to be able to easily move [my Neovim setu
 ### Get Build System Dependencies
 
 ```sh
-$ sudo apt install docker.io
-$ sudo apt install docker-buildx
+sudo apt install docker.io
+sudo apt install docker-buildx
 ```
 
-### Get the Code  
+### Get the Code
 
 ```sh
-$ cd <SOMEWHERE>
-$ git clone https://github.com/513G3/nvim-docker
+cd <SOMEWHERE>
+git clone https://github.com/513G3/nvim-docker
 ```
 
-### Build the Docker Container
+### Build the Docker Image
 
 ```sh
-$ cd nvim-docker
-$ docker buildx build --tag nvim-docker .
+cd nvim-docker
+docker buildx build --tag nvim-docker .
 ```
 
 ### Set an Alias
 
 ```sh
-$ tail -1 ~/.bash_aliases 
-alias nvim-docker='<SOMEWHERE>/nvim-docker/nvim_docker.sh'
+echo "alias nvim-docker='<SOMEWHERE>/nvim-docker/nvim_docker.sh'" >> ~/.bash_aliases
 ```
 
-### Run Neovim in the Docker Container
+### Run Neovim in a Docker Container
 
 ```sh
-$ nvim-docker ~/workspace
+nvim-docker ~/workspace
 ```
+
+### Archive the Docker Image for Transport to a Different Machine
+
+```sh
+docker save -o nvim-docker.tar nvim-docker:latest
+``` 
+
+### Load the Docker Image Into a Different Machine
+
+```sh
+docker load < nvim-docker.tar
+``` 
