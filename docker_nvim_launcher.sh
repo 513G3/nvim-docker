@@ -6,4 +6,4 @@ fi
 
 SOURCE=$1
 TARGET=$(basename "${SOURCE%/}")
-docker run -it --mount type=bind,source=${SOURCE},target=/bind/mount/${TARGET} --rm neovim_docker /bind/mount/${TARGET}
+docker run -it --mount type=bind,source=${SOURCE},target=/bind/mount/${TARGET} --rm nvim_docker /bind/mount/${TARGET}
