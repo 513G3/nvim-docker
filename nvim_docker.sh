@@ -9,4 +9,4 @@ SOURCE=$1
 TARGET=$(basename "${SOURCE%/}")
 ID=$(id -u $USER)
 GID=$(id -g $USER)
-docker run -it --mount type=bind,source=${SOURCE},target=/bind/mount/${TARGET} -u ${ID}:${GID} --rm nvim-docker /bind/mount/${TARGET}
+docker run --rm -it --mount type=bind,source=${SOURCE},target=/bind/mount/${TARGET} -u ${ID}:${GID} nvim-docker /bind/mount/${TARGET}
