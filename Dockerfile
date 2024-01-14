@@ -24,8 +24,33 @@ RUN npm install -g neovim
 # Install stuff via pip3
 RUN pip3 install neovim
 
-# Change to home directory
-WORKDIR /root
+# Install go
+RUN curl -LO https://go.dev/dl/go1.21.6.linux-amd64.tar.gz
+RUN rm -fr /usr/local/go && tar -C /usr/local -xzf go1.21.6.linux-amd64.tar.gz
+RUN rm go1.21.6.linux-amd64.tar.gz
+
+# Set entrypoint to configure runtime stuff and invoke nvim
+COPY ./launcher.sh /
+RUN chmod 755 /launcher.sh
+ENTRYPOINT [ "/launcher.sh" ]
+
+# Create a docker user and group (for fixuid shenanigans)
+RUN addgroup --gid 1111 docker && adduser --uid 1111 --ingroup docker --home /home/docker --shell /bin/bash --disabled-password --gecos "" docker
+
+# Install fixuid
+RUN USER=docker && \
+    GROUP=docker && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\npaths:\n  - /home/docker" > /etc/fixuid/config.yml
+
+# Switch to the docker user
+USER docker:docker
+
+# Change to the docker user's home directory
+WORKDIR /home/docker
 
 # Prepare for fonts
 RUN mkdir .fonts
@@ -41,29 +66,17 @@ RUN mkdir temp && mv UbuntuMono.zip temp && cd temp && unzip *.zip && mv *.ttf ~
 # Update the font cache
 RUN fc-cache -fv
 
-# Install go
-RUN curl -LO https://go.dev/dl/go1.21.6.linux-amd64.tar.gz
-RUN rm -fr /usr/local/go && tar -C /usr/local -xzf go1.21.6.linux-amd64.tar.gz
-# NOTE that the $PATH gets updated in nvim_launcher.sh instead
-
 # Install nvim
 RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
 RUN tar xzf nvim-linux64.tar.gz
-RUN ln -sf ~/nvim-linux64/bin/nvim /usr/bin/
+RUN rm nvim-linux64.tar.gz
 
 # Get custom nvim configuration
 RUN mkdir -p .local/share
 RUN mkdir .config
 WORKDIR .config
 RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim
-
-# Change to home directory
-WORKDIR /root
+WORKDIR /home/docker
 
 # Run nvim while online and let lazy and mason install stuff
-RUN nvim & sleep 20 && killall nvim
-
-# Get bash to invoke nvim via nvim_launcher.sh
-COPY ./nvim_launcher.sh /
-RUN chmod 755 /nvim_launcher.sh
-ENTRYPOINT [ "/nvim_launcher.sh" ]
+RUN /home/docker/nvim-linux64/bin/nvim & sleep 20 && killall nvim
