@@ -16,6 +16,7 @@ RUN apt install -y lua5.1
 RUN apt install -y luarocks
 RUN apt install -y curl
 RUN apt install -y git
+RUN apt install -y xclip
 RUN rm -rf /var/lib/apt/lists/*
 
 # Install stuff via npm
