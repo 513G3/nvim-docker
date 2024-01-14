@@ -1,9 +1,9 @@
 #!/bin/bash
 if [ "$#" -ne 1 ]; then
-  echo "Please pass one direcotry path arg"
+  echo "Please pass the directory you want to work from"
   exit 1
 fi
 
 SOURCE=$1
 TARGET=$(basename "${SOURCE%/}")
-docker run -it --mount type=bind,source=${SOURCE},target=/bind/mount/${TARGET} --rm nvim_docker /bind/mount/${TARGET}
+docker run -it --mount type=bind,source=${SOURCE},target=/bind/mount/${TARGET} --rm nvim-docker /bind/mount/${TARGET}
