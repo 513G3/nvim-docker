@@ -76,7 +76,7 @@ RUN rm nvim-linux64.tar.gz
 RUN mkdir -p .local/share
 RUN mkdir .config
 WORKDIR .config
-RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim
+RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.00
 WORKDIR /home/docker
 
 # Run nvim while online and let lazy and mason install stuff
