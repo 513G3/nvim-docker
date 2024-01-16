@@ -29,6 +29,7 @@ docker buildx build --tag nvim-docker .
 
 ```sh
 echo "alias nvim-docker='<SOMEWHERE>/nvim-docker/nvim_docker.sh'" >> ~/.bash_aliases
+source ~/.bash_aliases
 ```
 
 ### Run Neovim in a Docker Container
@@ -42,6 +43,8 @@ nvim-docker ~/workspace
 ```sh
 docker save -o nvim-docker.tar nvim-docker:latest
 ``` 
+
+Remember to grab `nvim_docker.sh` too so you can repeat the `alias` step on the different machine.
 
 ### Load the Docker Image Into a Different Machine
 
