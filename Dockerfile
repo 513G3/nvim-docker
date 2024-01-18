@@ -4,26 +4,27 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install stuff via apt
 RUN apt update -y
-RUN apt install -y npm
 RUN apt install -y ripgrep
 RUN apt install -y fd-find
 RUN apt install -y python3-pip
 RUN apt install -y python3-venv
 RUN apt install -y cargo
 RUN apt install -y composer
-RUN apt install -y nodejs
 RUN apt install -y lua5.1
 RUN apt install -y luarocks
 RUN apt install -y curl
 RUN apt install -y git
 RUN apt install -y xclip
+RUN apt install -y locales
+RUN apt install -y fontconfig
+RUN apt install -y ruby
+RUN apt install -y lsb-release
 RUN rm -rf /var/lib/apt/lists/*
 
-# Install stuff via npm
+# Install node-specific stuff
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt install -y nodejs
 RUN npm install -g neovim
-
-# Install stuff via pip3
-RUN pip3 install neovim
 
 # Install go
 RUN curl -LO https://go.dev/dl/go1.21.6.linux-amd64.tar.gz
@@ -50,6 +51,9 @@ RUN USER=docker && \
 # Switch to the docker user
 USER docker:docker
 
+# Install stuff via pip3
+RUN pip3 install neovim
+
 # Change to the docker user's home directory
 WORKDIR /home/docker
 
@@ -73,7 +77,7 @@ RUN tar xzf nvim-linux64.tar.gz
 RUN rm nvim-linux64.tar.gz
 
 # Get custom nvim configuration
-RUN mkdir -p .local/share
+RUN mkdir -p .local/share/nvim/mason
 RUN mkdir .config
 WORKDIR .config
 RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.00
