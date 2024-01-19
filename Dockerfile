@@ -97,5 +97,6 @@ WORKDIR .config
 RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.00
 WORKDIR /home/docker
 
-# Run nvim while online and let lazy and mason install stuff
-RUN /home/docker/nvim-linux64/bin/nvim & sleep 20 && killall nvim
+# Run nvim while online and let it install stuff
+# TODO Figure out a good way to couple this line with the `lsp-setup.lua` file in the config repo above
+RUN ./nvim-linux64/bin/nvim --headless +"MasonInstall ruff-lsp lua-language-server buf-language-server clangd pyright" +q
