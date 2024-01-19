@@ -43,6 +43,7 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN curl -LO https://go.dev/dl/go1.21.6.linux-amd64.tar.gz
 RUN rm -fr /usr/local/go && tar -C /usr/local -xzf go1.21.6.linux-amd64.tar.gz
 RUN rm go1.21.6.linux-amd64.tar.gz
+RUN ln -sf /usr/local/go/bin/go /usr/local/bin/
 
 # Set entrypoint to configure runtime stuff and invoke nvim
 COPY ./launcher.sh /
