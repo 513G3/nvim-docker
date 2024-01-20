@@ -50,53 +50,36 @@ COPY ./launcher.sh /
 RUN chmod 755 /launcher.sh
 ENTRYPOINT [ "/launcher.sh" ]
 
-# Create a docker user and group (for fixuid shenanigans)
-RUN addgroup --gid 1111 docker && adduser --uid 1111 --ingroup docker --home /home/docker --shell /bin/bash --disabled-password --gecos "" docker
-
-# Install fixuid
-RUN USER=docker && \
-    GROUP=docker && \
-    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
-    chown root:root /usr/local/bin/fixuid && \
-    chmod 4755 /usr/local/bin/fixuid && \
-    mkdir -p /etc/fixuid && \
-    printf "user: $USER\ngroup: $GROUP\npaths:\n  - /home/docker" > /etc/fixuid/config.yml
-
-# Switch to the docker user
-USER docker:docker
-
 # Install stuff via pip3
 RUN pip3 install neovim
 
-# Change to the docker user's home directory
-WORKDIR /home/docker
-
 # Prepare for fonts
-RUN mkdir .fonts
+RUN mkdir $HOME/.fonts
 
 # Install Ubuntu Nerd Font
 RUN curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Ubuntu.zip
-RUN mkdir temp && mv Ubuntu.zip temp && cd temp && unzip *.zip && mv *.ttf ~/.fonts/ && cd .. && rm -fr temp
+RUN mkdir temp && mv Ubuntu.zip temp && cd temp && unzip *.zip && mv *.ttf $HOME/.fonts/ && cd .. && rm -fr temp
 
 # Install Ubuntu Mono Nerd Font
 RUN curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/UbuntuMono.zip
-RUN mkdir temp && mv UbuntuMono.zip temp && cd temp && unzip *.zip && mv *.ttf ~/.fonts/ && cd .. && rm -fr temp
+RUN mkdir temp && mv UbuntuMono.zip temp && cd temp && unzip *.zip && mv *.ttf $HOME/.fonts/ && cd .. && rm -fr temp
 
 # Update the font cache
 RUN fc-cache -fv
 
 # Install nvim
+WORKDIR /root
 RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
 RUN tar xzf nvim-linux64.tar.gz
 RUN rm nvim-linux64.tar.gz
 
 # Get custom nvim configuration
-RUN mkdir -p .local/share/nvim/mason
-RUN mkdir .config
-WORKDIR .config
+RUN mkdir -p $HOME/.local/share/nvim/mason
+RUN mkdir -p $HOME/.config
+WORKDIR /root/.config
 RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.00
-WORKDIR /home/docker
+WORKDIR /root
 
 # Run nvim while online and let it install stuff
 # TODO Figure out a good way to couple this line with the `lsp-setup.lua` file in the config repo above
-RUN ./nvim-linux64/bin/nvim --headless +"MasonInstall ruff-lsp lua-language-server buf-language-server clangd pyright" +q
+RUN $HOME/nvim-linux64/bin/nvim --headless +"MasonInstall ruff-lsp lua-language-server buf-language-server clangd pyright" +q
