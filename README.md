@@ -18,7 +18,7 @@ As a protection mechanism against accidentally running `nvim-docker /` and chang
 
 * `/usr/local/workspace`
 * `/local/mnt/workspace`
-* `/home/$USER`
+* `/home/$USER/workspace`
 
 
 ### Get Build System Dependencies

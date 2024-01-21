@@ -110,7 +110,11 @@ path = path.absolute()
 base = path if path.is_dir() else path.parent.absolute()
 
 # Only operate on paths with sane roots
-SANE_ROOTS = ["/usr/local/workspace", "/local/mnt/workspace", f"/home/{os.getlogin()}"]
+SANE_ROOTS = [
+    "/usr/local/workspace",
+    "/local/mnt/workspace",
+    f"/home/{os.getlogin()}/workspace",
+]
 bad_juju = True
 for sr in SANE_ROOTS:
     if str(path).startswith(sr):
