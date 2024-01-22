@@ -22,6 +22,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
     handlers=log_handlers,
 )
+WATCH_DIR = LOG_DIR + "/chown_watch"
 
 
 def usage():
@@ -29,12 +30,15 @@ def usage():
     print(f"$ sudo -E {__file__} <DIRECTORY_OR_FILE>")
 
 
-def chown(root_dir, uid_gid):
-    # Get stuff ready for watching and chown'ing
-    WATCH_DIR = LOG_DIR + "/chown_watch"
+def reset_watch():
     if Path(WATCH_DIR).is_dir():
         shutil.rmtree(WATCH_DIR)
     Path(WATCH_DIR).mkdir(parents=True, exist_ok=True)
+
+
+def chown(root_dir, uid_gid):
+    # Get stuff ready for watching and chown'ing
+    reset_watch()
 
     # Trigger the chown subprocesses
     while True:
@@ -147,3 +151,6 @@ args = [
     f"/bind/mount/{path}",
 ]
 subprocess.call((args))
+
+# Reset the watch directory
+reset_watch()
