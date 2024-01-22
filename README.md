@@ -10,11 +10,14 @@ There are two quirks and both pertain to ownership of files and directories on y
 
 #### UID:GID
 
-Since root is the default user within a docker container and since I need to be able to bind mount a local directory/workspace with my development files into the docker container, an issue arises.  Files and directories made with nvim in the container's bind mount will have UID:GID of 0:0 on the host.  I tried several approaches to overcome this.  First, I leveraged [fixuid](https://github.com/boxboat/fixuid) but realized that it caused a ~1 minute startup delay every time the container launches... unacceptable for me since I launch the container many times over the course of a development day.  I then leveraged Python's [inotify](https://pypi.org/project/inotify/) but the recurisve watch failed for cases like `mkdir -p l/m/n/o/ && touch l/m/n/o/p.txt` (this was indeed called out on the PyPi site).  Finally, I went with the solution here... have a `sudo` process on the host periodically chown the contents of the bind mount... this is why `sudo` is needed in the "Alias" section below.
+Since root is the default user within a docker container, files and directories made with nvim in the container's bind mount will have UID:GID of 0:0 on the host.  I solved this problem by periodically launching a `sudo` process on the host `chown` the contents of the bind mount.  This is why `sudo` is needed in the "Alias" section below.
+
+* I tried [fixuid](https://github.com/boxboat/fixuid) but realized that it caused a ~1 minute startup delay every time the container launches... unacceptable for iterative development.
+* I tried [inotify](https://pypi.org/project/inotify/) but the recurisve watch failed for cases like `mkdir -p l/m/n/o/ && touch l/m/n/o/p.txt`.
 
 #### Sane Roots
 
-As a protection mechanism against accidentally running `nvim-docker /` and changing the ownership of your entire filesystem... only paths/files with sane roots are accepted:
+As a protection mechanism against accidentally running `nvim-docker /` and changing the ownership of the entire filesystem... only paths/files with sane roots are accepted:
 
 * `/usr/local/workspace`
 * `/local/mnt/workspace`
