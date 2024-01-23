@@ -48,7 +48,7 @@ docker buildx build --tag nvim-docker .
 ### Set an Alias
 
 ```sh
-echo "alias nvim-docker='sudo -E <SOMEWHERE>/nvim-docker/nvim_docker.py'" >> ~/.bash_aliases
+echo "alias nvd='sudo -E <SOMEWHERE>/nvim-docker/nvim_docker.py'" >> ~/.bash_aliases
 source ~/.bash_aliases
 ```
 
