@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Run nvim
-/root/nvim-linux64/bin/nvim $1
+~/nvim-linux64/bin/nvim $1

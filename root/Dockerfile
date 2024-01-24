@@ -18,6 +18,7 @@ RUN apt install -y git
 RUN apt install -y locales
 RUN apt install -y lsb-release
 RUN apt install -y ripgrep
+RUN apt install -y sudo
 
 # Install nvim stuff via apt
 RUN apt install -y cargo
@@ -45,11 +46,6 @@ RUN rm -fr /usr/local/go && tar -C /usr/local -xzf go1.21.6.linux-amd64.tar.gz
 RUN rm go1.21.6.linux-amd64.tar.gz
 RUN ln -sf /usr/local/go/bin/go /usr/local/bin/
 
-# Set entrypoint to configure runtime stuff and invoke nvim
-COPY ./launcher.sh /
-RUN chmod 755 /launcher.sh
-ENTRYPOINT [ "/launcher.sh" ]
-
 # Install stuff via pip3
 RUN pip3 install neovim
 
@@ -72,6 +68,11 @@ WORKDIR /root
 RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
 RUN tar xzf nvim-linux64.tar.gz
 RUN rm nvim-linux64.tar.gz
+
+# Set entrypoint to configure runtime stuff and invoke nvim
+COPY ./launcher.sh /
+RUN chmod 755 /launcher.sh
+ENTRYPOINT [ "/launcher.sh" ]
 
 # Get custom nvim configuration
 RUN mkdir -p $HOME/.local/share/nvim/mason
