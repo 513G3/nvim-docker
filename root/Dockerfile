@@ -83,4 +83,4 @@ WORKDIR /root
 
 # Run nvim while online and let it install stuff
 # TODO Figure out a good way to couple this line with the `lsp-setup.lua` file in the config repo above
-RUN $HOME/nvim-linux64/bin/nvim --headless +"MasonInstall ruff-lsp lua-language-server buf-language-server clangd pyright" +q
+RUN $HOME/nvim-linux64/bin/nvim --headless +"MasonInstall bash-language-server ruff-lsp lua-language-server buf-language-server clangd pyright" +q
