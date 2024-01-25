@@ -10,7 +10,7 @@ The steps below describe how to build the `nvim-docker-root` image (which you wi
 
 You must do this step on the Internet-connected host that you will build `nvim-docker-root` on.
 
-If you will build and run `nvim-docker-$USER` on an offline host, repeat these steps there too.
+If you will build and run `nvim-docker-$USER` on an offline host, repeat this step there too.
 
 ```sh
 sudo apt install docker.io
