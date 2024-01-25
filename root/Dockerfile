@@ -78,7 +78,7 @@ ENTRYPOINT [ "/launcher.sh" ]
 RUN mkdir -p $HOME/.local/share/nvim/mason
 RUN mkdir -p $HOME/.config
 WORKDIR /root/.config
-RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.01
+RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.02
 WORKDIR /root
 
 # Run nvim while online and let it install stuff
