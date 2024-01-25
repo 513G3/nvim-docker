@@ -16,7 +16,7 @@ if len(sys.argv[1:]) > 1:
     usage()
     sys.exit(1)
 
-# If there wan an argument, make sure that it is a file or a directory
+# If there was an argument, make sure that it is a file or a directory
 if len(sys.argv[1:]) == 1:
     path = Path(sys.argv[1])
     if not path.is_dir() and not path.is_file():
