@@ -1,7 +1,7 @@
 #!/bin/bash
 
 USER=$1
-DIR=/home/$USER/.local/share/nvim
+DIR=/home/"$USER"/.local/share/nvim
 
 # Find all of the symlinks
 declare -A links
