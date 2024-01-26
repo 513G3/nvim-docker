@@ -79,6 +79,7 @@ RUN mkdir -p $HOME/.local/share/nvim/mason
 RUN mkdir -p $HOME/.config
 WORKDIR /root/.config
 RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.03
+RUN rm -r ./nvim/.git
 WORKDIR /root
 
 # Run nvim while online and let it install stuff
