@@ -74,7 +74,9 @@ cd nvim-docker/user
 ./build_image.sh
 ```
 
-## Set an Alias
+## Run
+
+### Set an Alias
 
 On the machine with the `nvim-docker-$USER` image, make an alias.
 
