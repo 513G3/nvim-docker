@@ -78,9 +78,9 @@ ENTRYPOINT [ "/launcher.sh" ]
 RUN mkdir -p $HOME/.local/share/nvim/mason
 RUN mkdir -p $HOME/.config
 WORKDIR /root/.config
-RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.02
+RUN git clone https://github.com/513G3/kickstart-modular.nvim nvim && cd nvim && git checkout v1.03
 WORKDIR /root
 
 # Run nvim while online and let it install stuff
 # TODO Figure out a good way to couple this line with the `lsp-setup.lua` file in the config repo above
-RUN $HOME/nvim-linux64/bin/nvim --headless +"MasonInstall bash-language-server ruff-lsp lua-language-server buf-language-server clangd pyright" +q
+RUN $HOME/nvim-linux64/bin/nvim --headless +"MasonInstall bash-language-server shellcheck ruff-lsp lua-language-server buf-language-server clangd pyright" +q
