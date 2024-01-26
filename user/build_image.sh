@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TAG=nvim-docker-$USER
-GID=$(id -g $USER)
+GID=$(id -g "$USER")
 
 echo "Building $TAG with UID:GID $UID:$GID" 
 cp ../launcher.sh .
