@@ -21,6 +21,10 @@ done
 # Find and fix all of the files with /root/ in them
 for file in $(find "$DIR" -type f); do
     if grep "/root/" "$file" 2>/dev/null; then
-        sed -i "s/\/root\//\/home\/$USER\//g" "$file"
+        if [[ $(file "$file") = *"ELF"* ]]; then
+            echo "Skipping ELF $file"
+        else
+            sed -i "s/\/root\//\/home\/$USER\//g" "$file"
+        fi
     fi
 done
