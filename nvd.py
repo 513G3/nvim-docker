@@ -8,7 +8,7 @@ from pathlib import Path
 
 def usage():
     print("Usage:")
-    print(f"$ ./{__file__} [DIRECTORY_OR_FILE]")
+    print(f"$ .{__file__} [DIRECTORY_OR_FILE]")
 
 
 # Make sure that no more than one argument was passed to the script
