@@ -17,7 +17,6 @@ RUN apt install -y fontconfig
 RUN apt install -y git
 RUN apt install -y locales
 RUN apt install -y lsb-release
-RUN apt install -y ripgrep
 RUN apt install -y sudo
 
 # Install nvim stuff via apt
@@ -29,6 +28,7 @@ RUN apt install -y luarocks
 RUN apt install -y openjdk-11-jre
 RUN apt install -y python3-pip
 RUN apt install -y python3-venv
+RUN apt install -y ripgrep
 RUN apt install -y ruby
 RUN apt install -y xclip
 
