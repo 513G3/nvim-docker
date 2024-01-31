@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Change to the new work directory
-echo "$1"
 if [ -d "$1" ]; then
   DIR="$1"
 else
