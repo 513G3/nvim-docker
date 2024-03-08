@@ -19,11 +19,20 @@ RUN mkdir -p /home/$_USER/.local/share
 RUN cp -r /root/.local/share/nvim /home/$_USER/.local/share/nvim
 RUN cp -r /root/nvim-linux64 /home/$_USER/
 
+# Copy in ~/.ssh/
+RUN mkdir -p /home/$_USER/.ssh
+COPY .ssh/id_rsa /home/$_USER/.ssh/
+COPY .ssh/id_rsa.pub /home/$_USER/.ssh/
+COPY .ssh/known_hosts /home/$_USER/.ssh/
+
+# Copy in ~/.gitconfig
+COPY .gitconfig /home/$_USER/
+
 # Fix ownership
 RUN chown -R $_UID:$_GID /home/$_USER
 
 # Copy in script to fix stuff
-COPY ./fixer.sh /
+COPY fixer.sh /
 RUN chmod 755 /fixer.sh
 
 # Switch to the non-root user
