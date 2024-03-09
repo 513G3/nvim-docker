@@ -2,9 +2,9 @@
 
 # Change to the new work directory
 if [ -d "$1" ]; then
-  DIR="$1"
+    DIR="$1"
 else
-  DIR=$(dirname "$1")
+    DIR=$(dirname "$1")
 fi
 cd "$DIR" || return 1
 
