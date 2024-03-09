@@ -24,7 +24,6 @@ RUN mkdir -p /home/$_USER/.ssh
 RUN chmod 700 /home/$_USER/.ssh
 COPY .ssh/id_rs[a] /home/$_USER/.ssh/
 COPY .ssh/id_rsa.pu[b] /home/$_USER/.ssh/
-COPY .ssh/known_host[s] /home/$_USER/.ssh/
 COPY ssh_config /home/$_USER/.ssh/config
 
 # Copy in git config (best effort via glob)
