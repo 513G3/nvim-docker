@@ -1,0 +1,1 @@
+PubkeyAcceptedAlgorithms +ssh-rsa # For OpenSSH <8.5, use PubkeyAcceptedKeyTypes

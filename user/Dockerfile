@@ -19,14 +19,16 @@ RUN mkdir -p /home/$_USER/.local/share
 RUN cp -r /root/.local/share/nvim /home/$_USER/.local/share/nvim
 RUN cp -r /root/nvim-linux64 /home/$_USER/
 
-# Copy in ~/.ssh/
+# Copy in ssh stuff (best effort via glob)
 RUN mkdir -p /home/$_USER/.ssh
-COPY .ssh/id_rsa /home/$_USER/.ssh/
-COPY .ssh/id_rsa.pub /home/$_USER/.ssh/
-COPY .ssh/known_hosts /home/$_USER/.ssh/
+RUN chmod 700 /home/$_USER/.ssh
+COPY .ssh/id_rs[a] /home/$_USER/.ssh/
+COPY .ssh/id_rsa.pu[b] /home/$_USER/.ssh/
+COPY .ssh/known_host[s] /home/$_USER/.ssh/
+COPY ssh_config /home/$_USER/.ssh/config
 
-# Copy in ~/.gitconfig
-COPY .gitconfig /home/$_USER/
+# Copy in git config (best effort via glob)
+COPY .gitconfi[g] /home/$_USER/
 
 # Fix ownership
 RUN chown -R $_UID:$_GID /home/$_USER
