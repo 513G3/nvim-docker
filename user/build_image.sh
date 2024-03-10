@@ -17,4 +17,4 @@ fi
 docker buildx build --no-cache --tag nvim-docker-"$USER" --build-arg _USER="$USER" --build-arg _UID="$UID" --build-arg _GID="$GID" .
 
 # Cleanup
-rm -fr .ssh .gitconfig >> /dev/null 2>&1
+rm -fr .ssh .gitconfig >>/dev/null 2>&1
