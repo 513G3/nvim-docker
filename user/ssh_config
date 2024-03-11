@@ -1,7 +1,4 @@
 PubkeyAcceptedAlgorithms +ssh-rsa # For OpenSSH <8.5, use PubkeyAcceptedKeyTypes
-Host 192.168.*
-    StrictHostKeyChecking no
-Host 10.*
-    StrictHostKeyChecking no
-Host *gerrit*
+Host *
+    Port 29418 # Gerrit
     StrictHostKeyChecking no
