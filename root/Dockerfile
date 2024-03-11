@@ -5,40 +5,36 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Grab the man pages
 RUN yes | unminimize
 
-# Install general stuff via apt
-RUN apt update -y
-RUN apt install -y apt-utils
-RUN apt install -y man
-RUN apt install -y man-db
-RUN apt install -y bash-builtins
-RUN apt install -y curl
-RUN apt install -y file
-RUN apt install -y fontconfig
-RUN apt install -y git
-RUN apt install -y locales
-RUN apt install -y lsb-release
-RUN apt install -y sudo
-
-# Install nvim stuff via apt
-RUN apt install -y cargo
-RUN apt install -y composer
-RUN apt install -y fd-find
-RUN apt install -y lua5.1
-RUN apt install -y luarocks
-RUN apt install -y openjdk-11-jre
-RUN apt install -y python3-pip
-RUN apt install -y python3-venv
-RUN apt install -y ripgrep
-RUN apt install -y ruby
-RUN apt install -y xclip
+# Install apt packages
+RUN apt update -y && \
+    apt install -y \
+    apt-utils \
+    bash-builtins \
+    cargo \
+    composer \
+    curl \
+    fd-find \
+    file \
+    fontconfig \
+    git \
+    locales \
+    lsb-release \
+    lua5.1 \
+    luarocks \
+    man \
+    man-db \
+    openjdk-11-jre \
+    python3-pip \
+    python3-venv \
+    ripgrep \
+    ruby \
+    sudo \
+    xclip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install node-specific stuff
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt install -y nodejs
-RUN npm install -g neovim
-
-# Clean up apt
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt install -y nodejs && npm install -g neovim
 
 # Install go
 RUN curl -LO https://go.dev/dl/go1.21.6.linux-amd64.tar.gz
@@ -53,21 +49,24 @@ RUN pip3 install neovim
 RUN mkdir $HOME/.fonts
 
 # Install Ubuntu Nerd Font
-RUN curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Ubuntu.zip
-RUN mkdir temp && mv Ubuntu.zip temp && cd temp && unzip *.zip && mv *.ttf $HOME/.fonts/ && cd .. && rm -fr temp
+RUN curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Ubuntu.zip && \
+  mkdir temp && mv Ubuntu.zip temp && cd temp && unzip *.zip && \
+  mv *.ttf $HOME/.fonts/ && cd .. && rm -fr temp
 
 # Install Ubuntu Mono Nerd Font
-RUN curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/UbuntuMono.zip
-RUN mkdir temp && mv UbuntuMono.zip temp && cd temp && unzip *.zip && mv *.ttf $HOME/.fonts/ && cd .. && rm -fr temp
+RUN curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/UbuntuMono.zip && \
+  mkdir temp && mv UbuntuMono.zip temp && cd temp && unzip *.zip && \
+  mv *.ttf $HOME/.fonts/ && cd .. && rm -fr temp
 
 # Update the font cache
 RUN fc-cache -fv
 
 # Install nvim
 WORKDIR /root
-RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
-RUN tar xzf nvim-linux64.tar.gz
-RUN rm nvim-linux64.tar.gz
+RUN curl \
+  -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz && \
+  tar xzf nvim-linux64.tar.gz && \
+  rm nvim-linux64.tar.gz
 
 # Set entrypoint to configure runtime stuff and invoke nvim
 COPY ./launcher.sh /
