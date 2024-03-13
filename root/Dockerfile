@@ -17,6 +17,7 @@ RUN apt update -y && \
     file \
     fontconfig \
     git \
+    libus-dev \
     locales \
     lsb-release \
     lua5.1 \
@@ -24,6 +25,7 @@ RUN apt update -y && \
     man \
     man-db \
     openjdk-11-jre \
+    openssl \
     python3-pip \
     python3-venv \
     ripgrep \
