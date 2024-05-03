@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN yes | unminimize
 
 # Install apt packages
-RUN apt update -y && \
+RUN apt update && \
     apt install -y \
     apt-utils \
     bash-builtins \
@@ -17,13 +17,15 @@ RUN apt update -y && \
     file \
     fontconfig \
     git \
-    libus-dev \
+    libssl-dev \
+    libusb-dev \
     locales \
     lsb-release \
     lua5.1 \
     luarocks \
     man \
     man-db \
+    mlocate \
     openjdk-11-jre \
     openssl \
     python3-pip \
