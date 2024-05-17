@@ -69,7 +69,7 @@ RUN fc-cache -fv
 # Install nvim
 WORKDIR /root
 RUN curl \
-  -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz && \
+  -LO https://github.com/neovim/neovim/releases/download/v0.10.0/nvim-linux64.tar.gz && \
   tar xzf nvim-linux64.tar.gz && \
   rm nvim-linux64.tar.gz
 
@@ -89,4 +89,5 @@ WORKDIR /root
 # Run nvim while online and let it install stuff
 # TODO Figure out a good way to couple this line with the `lsp-setup.lua` and
 # `mason-tool-installer.lua` files in the config repo above
-RUN $HOME/nvim-linux64/bin/nvim --headless +"MasonInstall bash-language-server shellcheck checkmake ruff-lsp json-lsp lua-language-server shfmt stylua buf buf-language-server protolint clangd cpplint pyright isort" +q
+RUN $HOME/nvim-linux64/bin/nvim --headless +"MasonInstall bash-language-server  shellcheck checkmake ruff-lsp json-lsp lua-language-server shfmt stylua buf buf-language-server protolint clangd cpplint pyright isort" +qa
+RUN $HOME/nvim-linux64/bin/nvim --headless +"Lazy! sync" +qa
