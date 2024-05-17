@@ -48,6 +48,7 @@ RUN ln -sf /usr/local/go/bin/go /usr/local/bin/
 
 # Install stuff via pip3
 RUN pip3 install neovim
+RUN pip3 install pycryptodome
 
 # Prepare for fonts
 RUN mkdir $HOME/.fonts
