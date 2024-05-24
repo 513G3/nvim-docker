@@ -47,8 +47,10 @@ RUN rm go1.21.6.linux-amd64.tar.gz
 RUN ln -sf /usr/local/go/bin/go /usr/local/bin/
 
 # Install stuff via pip3
-RUN pip3 install neovim
-RUN pip3 install pycryptodome
+RUN pip3 install \
+    neovim \
+    psutil \
+    pycryptodome
 
 # Prepare for fonts
 RUN mkdir $HOME/.fonts
