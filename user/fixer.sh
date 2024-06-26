@@ -3,6 +3,9 @@
 USER=$1
 DIR=/home/"$USER"/.local/share/nvim
 
+# Clean out all of the .pyc files
+find $DIR -name "*.pyc" -delete
+
 # Find all of the symlinks
 declare -A links
 while IFS= read -r line; do
