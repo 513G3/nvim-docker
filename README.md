@@ -17,7 +17,7 @@ sudo apt install docker.io
 sudo apt install docker-buildx
 ```
 
-## Get the Code 
+## Get the Code
 
 You must do this step on the Internet-connected host that you will build `nvim-docker-root` on.
 
@@ -43,7 +43,7 @@ cd nvim-docker
 
 This option is for instances where you want to run `nvd` on an offline host.
 
-Build the `nvim-docker-root` image.
+Build the `nvim-docker-root` image on the Internet-connected host.
 
 ```sh
 cd nvim-docker/root
@@ -54,7 +54,7 @@ Archive the `nvim-docker-root` image.
 
 ```sh
 docker save -o nvim-docker-root.tar nvim-docker-root:latest
-``` 
+```
 
 Transport the following files to the offline host.
 
@@ -65,7 +65,7 @@ Load `nvim-docker-root` into the offline host.
 
 ```sh
 docker load < nvim-docker-root.tar
-``` 
+```
 
 Build the `nvim-docker-$USER` image.
 
